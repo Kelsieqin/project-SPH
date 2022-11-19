@@ -36,3 +36,12 @@ export const reqSearchList = (data)=>{
 export const  reqGoodsInfo = (skuId)=>{
     return requests.get(`/item/${skuId}`)
 }
+
+
+// 产品添加购物车 或者 更新产品个数 - POST /api/cart/addToCart/{ skuId }/{ skuNum }  必须带参数
+export const reqAddOrUpdateShopCart = (skuId,skuNum)=>{
+    return requests({
+        method:'post',
+        url:`/cart/addToCart/${skuId}/${skuNum}`,
+    })
+}

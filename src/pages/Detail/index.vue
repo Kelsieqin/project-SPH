@@ -82,6 +82,7 @@
 
           <!-- 购买属性 -->
           <div class="choose">
+            <!-- 商品属性 -->
             <div class="chooseArea">
               <div class="choosed"></div>
               <dl
@@ -93,22 +94,44 @@
                 <dd
                   changepirce="0"
                   :class="{ active: spuSaleAttrValue.isChecked == 1 }"
-                  v-for="(spuSaleAttrValue, index) in spuSaleAttr.spuSaleAttrValueList"
+                  v-for="(
+                    spuSaleAttrValue, index
+                  ) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
-                  @click="changeActive(spuSaleAttrValue, spuSaleAttr.spuSaleAttrValueList)"
+                  @click="
+                    changeActive(
+                      spuSaleAttrValue,
+                      spuSaleAttr.spuSaleAttrValueList
+                    )
+                  "
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
               </dl>
             </div>
+            <!-- 商品数量及加入购物车 -->
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <!-- 商品数量 需要收集数据-->
+                <!-- 用户可以输入数量！ 注意：用户可能输入任何信息！！ -->
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="changeSkuNum"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : (skuNum = 1)"
+                  >-</a
+                >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <!-- 绑定事件，添加产品到购物车 -->
+                <!-- 以前的路由跳转，直接从A到B。这里在加入购物车，跳转路由之前：『 发请求将购买的产品信息，以请求的形式通知服务器进行存储 』 -->
+                <a @click="addShopCart">加入购物车</a>
               </div>
             </div>
           </div>
@@ -354,6 +377,12 @@ import Zoom from "./Zoom/Zoom";
 
 export default {
   name: "Detail",
+  data() {
+    return {
+      // 购买产品的数量
+      skuNum: 1,
+    };
+  },
   components: {
     ImageList,
     Zoom,
@@ -380,14 +409,46 @@ export default {
   },
   methods: {
     // 排他操作实现选择属性 - 参数需要有：当前点击的属性对象 和 全部属性对象
-    changeActive(AttrValue,AttrValueList){
+    changeActive(AttrValue, AttrValueList) {
       //点击后，更改所有的属性对象isChecked为0，只有点击的那个属性对象为1
       // 遍历
-      AttrValueList.forEach(item => {
+      AttrValueList.forEach((item) => {
         item.isChecked = "0";
       });
       AttrValue.isChecked = "1";
-    }
+    },
+    // 表单元素修改产品个数
+    changeSkuNum(event) {
+      // 1. 获取表单文本*1 -> 如果文本中包含文字，比如我爱你*1 = NaN，则结果为NaN
+      let value = event.target.value * 1;
+      // 如果用户输入的非法：不是数字、负数
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        // 合法情况 value > 1
+        // 不能有小数，需要取整
+        this.skuNum = parseInt(value);
+      }
+    },
+    // 加入购物车的回调函数
+    async addShopCart() {
+      // 1. 发请求 -- 讲产品信息放入数据库（通知服务器）
+      /*
+          下边代码实质：调用仓库中的addOrUpdateShopCart函数，返回一个promise(有async)
+          因此，加上await 获取成功或者失败的结果，函数加上async
+      */
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: this.$route.params.stuId,
+          skuNum: this.skuNum,
+        });
+        // 2. 服务器存储成功 -- 路由跳转，携带参数：产品名
+        
+      } catch (error) {
+        // 3. 服务器存储失败 -- 提示用户
+        alert(error.message);
+      }
+    },
   },
 };
 </script>

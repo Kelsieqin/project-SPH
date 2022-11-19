@@ -6,6 +6,7 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import AddCartSucess from '@/pages/AddCartSucess'
 
 export default [
     {
@@ -53,9 +54,16 @@ export default [
         redirect: '/home'
     },
     {
-        // 商品详情页面路由
+        // 商品详情路由
         path:'/detail/:stuId?',
         component:Detail,
+        meta:{show:true}
+
+    },
+    {
+        // 加入购物车成功路由
+        path:'/addcartsucess/:stuId?',
+        component:AddCartSucess,
         meta:{show:true}
 
     },

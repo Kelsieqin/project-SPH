@@ -160,7 +160,7 @@ export default {
     // // 通知vuex发请求，获取数据，存储与仓库中
     // this.$store.dispatch("categoryList");
     // 当组件挂载完毕，增加判断当前路由中组件路径,只要不是home组件，三节列表隐藏
-    if (this.$route.path == "/search") {
+    if (this.$route.path !== "/home" ) {
       this.isShow = false;
     }
   },

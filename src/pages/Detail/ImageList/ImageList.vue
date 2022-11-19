@@ -3,7 +3,8 @@
   <div class="swiper-container" ref="mySwiper">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(slide,index) in skuImageList" :key="slide.id">
-        <img :src="slide.imgUrl">
+        <!-- 实现点击谁 谁有高亮边框 -->
+        <img :src="slide.imgUrl" :class="{active:currentList==index}" @click="changeCurrentList(index)">
       </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -18,6 +19,12 @@ import Swiper from 'swiper'
     name: "ImageList",
     // 从父组件中拿数据
     props:['skuImageList'],
+    data() {
+      return {
+        // 控制哪个图片高亮, 默认为第一个
+        currentList:0,
+      }
+    },
     watch:{
       // 监听数据回来了，但是不能保证结构已经完善
       skuImageList(){
@@ -32,10 +39,23 @@ import Swiper from 'swiper'
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
               },
+              // 显示几个图片设置
+              slidesPerView : 3, 
+              // 每一次切换图片的个数
+              slidesPerGroup : 1,
           });
         });
       },
-    }
+    },
+    methods: {
+      // 点击谁更改currentList为谁的索引值
+      changeCurrentList(index){
+          this.currentList = index;
+          // 通知自己的兄弟组件，当前的索引值为几。同时修改上方大图
+          this.$bus.$emit('getImgIndex',index);
+      },
+
+    },
   }
 </script>
 
@@ -64,10 +84,6 @@ import Swiper from 'swiper'
           padding: 1px;
         }
 
-        &:hover {
-          border: 2px solid #f60;
-          padding: 1px;
-        }
       }
     }
 
