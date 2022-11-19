@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # app
 
 ## Project setup
@@ -249,3 +250,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    * 目标：点击哪个属性，哪个高亮
    * 解决办法：**排他思想**。绑定点击事件，参数需要知道：**点击对象 和 其他所有对象**。 
    * 具体实现：更改所有的属性对象isChecked为0，只有点击的那个属性对象为1
+=======
+# project-SPH
+>>>>>>> e5a1a4311f4c117b9c0f61924c483983d1d1da8d
