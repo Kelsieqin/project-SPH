@@ -442,8 +442,12 @@ export default {
           skuId: this.$route.params.stuId,
           skuNum: this.skuNum,
         });
-        // 2. 服务器存储成功 -- 路由跳转，携带参数：产品名
-        
+        // 2. 服务器存储成功 -- 路由跳转，传递产品个数、产品详情
+        // 路由传参只传递产品个数
+        this.$router.push({name:'addcartsucess',query:{skuNum:this.skuNum}});
+        // 产品详情通过本地会话存储sessionStorage - H5新增 
+        // 注意只能传递字符串
+        sessionStorage.setItem('shopMessage',JSON.stringify(this.skuInfo))
       } catch (error) {
         // 3. 服务器存储失败 -- 提示用户
         alert(error.message);

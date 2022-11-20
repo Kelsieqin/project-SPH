@@ -62,7 +62,8 @@ export default [
     },
     {
         // 加入购物车成功路由
-        path:'/addcartsucess/:stuId?',
+        name:'addcartsucess',
+        path:'/addcartsucess',
         component:AddCartSucess,
         meta:{show:true}
 

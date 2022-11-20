@@ -5,11 +5,13 @@
       <div class="goods">
         <div class="left-good">
           <div class="left-pic">
-            <img src="good.skuDefaultImg">
+            <!-- 展示产品图片 -->
+            <img :src="skuInfo.skuDefaultImg">
           </div>
           <div class="right-info">
-            <p class="title">小米红米 Redmi note8 手机 梦幻蓝 全网通(4GB+64GB)</p>
-            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：2</p>
+            <!-- 展示产品信息 -->
+            <p class="title">{{skuInfo.skuName}}</p>
+            <p class="attr">{{skuInfo.skuDesc}} 数量：{{$route.query.skuNum}}</p>
           </div>
         </div>
         <div class="right-gocart">
@@ -24,6 +26,12 @@
 <script>
   export default {
     name: 'AddCartSuccess',
+    computed:{
+      skuInfo(){
+        // 从会话存储中获取产品信息- 转化为JSON对象
+      return JSON.parse(sessionStorage.getItem('shopMessage'))
+      }
+    }
   }
 </script>
 
