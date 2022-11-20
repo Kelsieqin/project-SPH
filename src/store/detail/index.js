@@ -1,10 +1,14 @@
 // Detail组件的小仓库
 // 引入请求API
 import { reqGoodsInfo , reqAddOrUpdateShopCart} from '@/api'
+// 引入游客身份模块
+import {getUUID} from '@/utils/uuid_token'
 
 const state = {
     // 产品数据 不能瞎写，从文档中查看服务器返回的数据是什么类型 - 对象
     goodInfo:{},
+    // 游客身份生成，一旦生成，不在改变
+    uuid_token:getUUID(),
 };
 
 const actions = {

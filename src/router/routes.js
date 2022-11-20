@@ -7,6 +7,7 @@ import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
 import AddCartSucess from '@/pages/AddCartSucess'
+import ShopCart from '@/pages/ShopCart'
 
 export default [
     {
@@ -66,6 +67,12 @@ export default [
         path:'/addcartsucess',
         component:AddCartSucess,
         meta:{show:true}
-
+    },
+    {
+        // 购物车路由
+        name:'shopcart',
+        path:'/shopcart',
+        component:ShopCart,
+        meta:{show:true}
     },
 ]

@@ -15,8 +15,10 @@
           </div>
         </div>
         <div class="right-gocart">
-          <a href="javascript:" class="sui-btn btn-xlarge">查看商品详情</a>
-          <a href="javascript:" >去购物车结算 > </a>
+          <!-- 点击实现路由跳转到详情页面：需要携带产品的id-->
+          <router-link :to="`/detail/${skuInfo.id}`" class="sui-btn btn-xlarge">查看商品详情</router-link>
+          <!-- 点击实现路由跳转到购物车页面-->
+          <router-link to="/shopcart" >去购物车结算 > </router-link>
         </div>
       </div>
     </div>

@@ -6,13 +6,15 @@ Vue.use(Vuex);
 import home from './home'
 import search from './search'
 import detail from './detail'
+import shopcart from './shopcart'
 // vuex模块式开发
 export default new Vuex.Store({
     // 注册模块
     modules:{
         home,
         search,
-        detail
+        detail,
+        shopcart
     }
 
 })

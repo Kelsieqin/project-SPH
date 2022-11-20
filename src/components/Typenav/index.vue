@@ -106,7 +106,7 @@ export default {
     // 事件委托的路由跳转: event获取当前点击对象
     goSearch(event) {
       let element = event.target;
-      console.log(element.dataset);
+      // console.log(element.dataset);
       // 获取当前事件的全部属性【dataset】, 浏览器将自定义属性全部转为小写字母;
       // 解构参数：！！！注意自定义属性必须为data-XXX才能被dataset属性捕捉到！
       let { categoryname, category1id, category2id, category3id } =

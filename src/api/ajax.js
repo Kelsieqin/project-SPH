@@ -4,6 +4,8 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 // 引入进度条样式
 import "nprogress/nprogress.css"
+// 引入大仓库
+import store from '@/store'
 
 // 创造一个axios复制对象
 let requests = axios.create({
@@ -14,6 +16,13 @@ let requests = axios.create({
 
 // 请求拦截器
 requests.interceptors.request.use((config)=>{
+
+    // 向服务器发送用户临时身份: 检查uuid
+    if(store.state.detail.uuid_token){
+        // 配置请求头，添加一个字段（与后台协商好userTempId）
+        config.headers.userTempId = store.state.detail.uuid_token;
+    }
+
     // 进度条开始
     nprogress.start();
     // config配置项： 其中的请求头headers属性很重要

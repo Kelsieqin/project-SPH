@@ -37,11 +37,23 @@ export const  reqGoodsInfo = (skuId)=>{
     return requests.get(`/item/${skuId}`)
 }
 
-
 // 产品添加购物车 或者 更新产品个数 - POST /api/cart/addToCart/{ skuId }/{ skuNum }  必须带参数
 export const reqAddOrUpdateShopCart = (skuId,skuNum)=>{
     return requests({
         method:'post',
         url:`/cart/addToCart/${skuId}/${skuNum}`,
+    })
+}
+
+// 获取购物车数据接口 - get /api/cart/cartList
+export const reqCartList = ()=>{
+    return requests.get('/cart/cartList')
+}
+
+// 删除购物车中商品接口 - delete /api/cart/deleteCart/{skuId} 参数商品id 没有返回数据
+export const reqDeleteCartById = (skuId)=>{
+    return requests({
+        method:'delete',
+        url:`/cart/deleteCart/${skuId}`
     })
 }
